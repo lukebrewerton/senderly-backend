@@ -23,7 +23,8 @@ app.use(passport.session());
 
 //Import routes for Auth, Billing and API
 require("./routes/authRoutes")(app);
-require("./routes/billingRoutes")(app);
+//require("./routes/billingRoutes")(app);
+require("./routes/apiRoutes")(app);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT);
