@@ -11,7 +11,7 @@ const userSchema = new Schema({
   email: String
 });
 
-var stripeOptions = keys.stripeOptions;
+let stripeOptions = keys.stripeOptions;
 
 userSchema.plugin(timestamps);
 userSchema.plugin(stripeCustomer, stripeOptions);
