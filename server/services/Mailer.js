@@ -3,10 +3,11 @@ const helper = sendgrid.mail;
 const keys = require("../config/keys");
 
 class Mailer extends helper.Mail {
-  constructor({ subject, sender, recipient }, content) {
+  constructor({ recipient }, content) {
     super();
     this.sgApi = sendgrid(keys.sendGridKey);
-    this.senderEmail = sender;
+    this.senderEmail = new helper.Email("no-reply@senderly.io");
+    this.subject = "New message from your website.";
     this.body = new helper.Content("text/html", content);
     this.recipients = recipient;
 
@@ -18,7 +19,7 @@ class Mailer extends helper.Mail {
       path: "/v3/mail/send",
       body: this.toJSON()
     });
-    const response = await TouchList.sgApi.API(request);
+    const response = await this.sgApi.API(request);
     return response;
   }
   catch(error) {
