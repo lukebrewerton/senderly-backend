@@ -13,28 +13,29 @@ module.exports = app => {
   });
 
   //Main API route
-  app.post("/api/v1/forms/:formId", async (req, res) => {
-    //TODO: Create Mailer and email templates before finalising route.
+  app.post("/api/v1/forms/:formId", (req, res) => {
     const { name, email, message } = req.body;
+    console.log(req.body);
 
-    Form.findById(req.params.formId, (err, form) => {
+    Form.findById(req.params.formId, Form.recipient, err => {
       if (err) {
         res.send(err);
       } else {
-        const nuForm = Form({
-          name: req.body.name,
-          email: req.body._email,
-          message: req.body._message,
-          recipient: form.recipient
-        });
+        //const formRecipient = Form.recipient;
+
+        const newForm = {
+          name,
+          email,
+          message,
+          recipient: "luke@coding-crowd.com"
+        };
+        console.log(newForm);
+        const mailer = new Mailer(form, contactFormTemplate(newForm));
+        mailer.send();
+        res.send("Mail sent!");
+        console.log("Mail Sent!");
       }
     });
-    const mailer = new Mailer(nuForm, contactFormTemplate(nuForm));
-    try {
-      await mailer.send();
-    } catch (err) {
-      res.status(422).send(err);
-    }
   });
 
   app.post("/api/v1/forms", requireLogin, async (req, res) => {

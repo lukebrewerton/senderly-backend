@@ -7,5 +7,5 @@ const stripeWebhook = new StripeWebhook({
 });
 
 module.exports = app => {
-  app.post("/billing/events", stripeWebhook.middleware, stripeEvents);
+  app.post("/billing/events", stripeWebhook.middleware);
 };
