@@ -17,17 +17,17 @@ module.exports = app => {
     const { name, email, message } = req.body;
     console.log(req.body);
 
-    Form.findById(req.params.formId, Form.recipient, err => {
+    Form.findById(req.params.formId, "recipient", (err, form) => {
       if (err) {
         res.send(err);
       } else {
-        //const formRecipient = Form.recipient;
+        const formRecipient = form.recipient;
 
         const newForm = {
           name,
           email,
           message,
-          recipient: "luke@coding-crowd.com"
+          recipient: formRecipient
         };
         console.log(newForm);
         const mailer = new Mailer(form, contactFormTemplate(newForm));
