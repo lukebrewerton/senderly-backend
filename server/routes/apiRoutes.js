@@ -20,7 +20,7 @@ module.exports = app => {
     Form.findById(req.params.formId, Form.recipient, err => {
       if (err) {
         res.send(err);
-      } else {
+      }
         //const formRecipient = Form.recipient;
 
         const newForm = {
