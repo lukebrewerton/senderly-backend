@@ -39,7 +39,6 @@ module.exports = app => {
         };
         console.log();
         sgMail.send(msg);
-        res.send("Mail sent!");
         console.log("Mail Sent!");
       }
     });
