@@ -1,4 +1,3 @@
-//This will contain the routes for the API
 const mongoose = require("mongoose");
 const requireLogin = require("../middlewares/requireLogin");
 const sgMail = require("@sendgrid/mail");
@@ -9,12 +8,12 @@ const Form = mongoose.model("forms");
 
 module.exports = app => {
   //Route for testing API is live
-  app.get("/api/v1/test", function(req, res) {
-    res.send("This is the Senderly API Test route.");
+  app.get("/api/v1/ping", function(req, res) {
+    res.send("PONG");
   });
 
   //Main API route
-  app.post("/api/v1/forms/:formId", async (req, res) => {
+  app.post("/api/v1/forms/:formId", (req, res) => {
     const { name, email, message } = req.body;
     console.log(req.body);
 
