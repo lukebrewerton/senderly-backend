@@ -1,8 +1,9 @@
 //This will contain the routes for the API
 const mongoose = require("mongoose");
 const requireLogin = require("../middlewares/requireLogin");
-const Mailer = require("../services/Mailer");
-const contactFormTemplate = require("../services/emailTemplates/contactFormTemplate");
+const sgMail = require("@sendgrid/mail");
+const keys = require("../config/keys");
+//const Mailer = require("../services/Mailer");
 
 const Form = mongoose.model("forms");
 
@@ -13,7 +14,7 @@ module.exports = app => {
   });
 
   //Main API route
-  app.post("/api/v1/forms/:formId", (req, res) => {
+  app.post("/api/v1/forms/:formId", async (req, res) => {
     const { name, email, message } = req.body;
     console.log(req.body);
 
@@ -23,15 +24,21 @@ module.exports = app => {
       } else {
         const formRecipient = form.recipient;
 
-        const newForm = {
-          name,
-          email,
-          message,
-          recipient: formRecipient
+        sgMail.setApiKey(keys.sendGridKey);
+
+        const msg = {
+          to: formRecipient,
+          from: "Senderly.io <no-reply@senderly.io>",
+          templateId: "c211124d-f3fb-43fd-8334-3f449a38fab3",
+          substitutionWrappers: ["{{", "}}"],
+          substitutions: {
+            name: name,
+            email: email,
+            message: message
+          }
         };
-        console.log(newForm);
-        const mailer = new Mailer(form, contactFormTemplate(newForm));
-        mailer.send();
+        console.log();
+        sgMail.send(msg);
         res.send("Mail sent!");
         console.log("Mail Sent!");
       }
