@@ -39,6 +39,8 @@ module.exports = app => {
         };
         console.log();
         sgMail.send(msg);
+        backURL=req.header('Referer') 
+        res.redirect(backURL);
         console.log("Mail Sent!");
       }
     });
