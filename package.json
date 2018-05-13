@@ -1,7 +1,8 @@
 {
   "name": "senderly-server",
-  "version": "0.0.1",
-  "description": "Senderly allows you to send emails from static websites using the secure API.",
+  "version": "0.1.0",
+  "description":
+    "Senderly allows you to send emails from static websites using the secure API.",
   "main": "server.js",
   "scripts": {
     "server": "nodemon server.js",
@@ -18,11 +19,11 @@
     "lodash": "^4.17.5",
     "mongoose": "^5.0.10",
     "mongoose-timestamp": "^0.6.0",
+    "nodemon": "^1.17.4",
     "passport": "^0.4.0",
     "passport-github": "^1.1.0",
     "passport-google-oauth20": "^1.0.0",
     "path-parser": "^3.0.1",
-    "sendgrid": "^5.2.3",
     "stripe": "^5.6.1",
     "stripe-webhook-middleware": "^0.2.0"
   },
